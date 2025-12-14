@@ -79,7 +79,7 @@ const passwordController = {
                 paranoid,
                 currentPage = 1,
                 pageSize = 10,
-                sortBy = "createdAt",
+                sortBy = "id",
                 sortOrder = "DESC"
             } = req.query;
             const offset = (currentPage - 1) * pageSize;
@@ -96,8 +96,15 @@ const passwordController = {
             }
             const {count, rows} = await Password.findAndCountAll({
                 where: whereClause,
-                attributes: {exclude: ['encrypted_blob', 'iv', 'UserId', 'CategoryId']},
-                order: [[sortBy, sortOrder.toLowerCase()]],
+                attributes: {exclude: ['iv', 'UserId', 'CategoryId']},
+                include: [
+                    {
+                        model: Category,
+                        as: "category",
+                        attributes: ['id', 'name', 'icon'],
+                    }
+                ],
+                order: [['id', 'ASC'], ['title', 'ASC']],
                 limit: parseInt(pageSize),
                 offset,
                 paranoid: paranoid === 'true',
