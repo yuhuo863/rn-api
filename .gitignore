@@ -1,0 +1,34 @@
+# 依赖与构建产物
+node_modules/
+dist/
+out/
+build/
+*.tsbuildinfo
+
+# 运行时和临时文件
+.DS_Store
+.eslintcache
+*.log*
+*.tmp
+*.swp
+
+# 环境变量
+# .env # 已使用 dotenvx 第三方库进行加密
+.env.*
+env/.env*
+.env.keys
+
+
+# 数据库与本地存储
+*.db
+*.db-journal
+data/
+uploads/
+
+# 私钥存储以及本地密钥管理目录
+.pem
+.vault/
+
+# IDE 和编辑器配置文件
+.vscode/
+.idea/
