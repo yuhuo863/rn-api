@@ -3,11 +3,12 @@ const {NotFound} = require("http-errors");
 const {Op} = require("sequelize");
 const {success, failure} = require("../utils/responses");
 const {validatePassword} = require('../utils/validations');
+const {encrypt, decrypt} = require('../utils/encryption')
 
 const passwordController = {
     async createPassword(req, res) {
         try {
-            validatePassword(req);
+            validatePassword(req)
             let findCategoryId = req.body.categoryId
             if (!findCategoryId) {
                 const defaultCategory = await Category.findOne({
@@ -18,11 +19,12 @@ const passwordController = {
                 })
                 findCategoryId = defaultCategory ? defaultCategory.id : undefined
             }
-
+            const encryptedPassword = encrypt(req.body.encrypted_password, process.env.MASTER_PASSWORD);
             await Password.create({
+                ...req.body,
                 userId: req.user.id,
                 categoryId: findCategoryId,
-                ...req.body,
+                encrypted_password: encryptedPassword,
             });
             success(res, "成功创建密码", {}, 201);
         } catch (error) {
@@ -96,7 +98,6 @@ const passwordController = {
             }
             const {count, rows} = await Password.findAndCountAll({
                 where: whereClause,
-                attributes: {exclude: ['iv', 'UserId', 'CategoryId']},
                 include: [
                     {
                         model: Category,
@@ -104,13 +105,22 @@ const passwordController = {
                         attributes: ['id', 'name', 'icon'],
                     }
                 ],
+                attributes: {exclude: ['iv', 'UserId', 'CategoryId']},
                 order: [['id', 'ASC'], ['title', 'ASC']],
                 limit: parseInt(pageSize),
                 offset,
                 paranoid: paranoid === 'true',
             });
+            const passwords = rows.map(password => {
+                const decryptedPassword = decrypt(password.encrypted_password, process.env.MASTER_PASSWORD);
+                delete password.dataValues.encrypted_password;
+                return {
+                    ...password.toJSON(),
+                    password: decryptedPassword,
+                };
+            });
             success(res, "成功获取用户密码列表", {
-                passwords: rows,
+                passwords,
                 pagination: {
                     total: count,
                     currentPage: parseInt(currentPage),

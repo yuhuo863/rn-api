@@ -5,10 +5,9 @@ function validatePassword(req) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         throw new BadRequest(
-            `请求参数错误: ${errors
+            errors
                 .array()
-                .map((e) => e.msg)
-                .join(", ")}`,
+                .map(e => e.msg)[0]
         );
     }
 }

@@ -11,19 +11,25 @@ router.post(
     [
         body("title")
             .notEmpty()
-            .withMessage("密码标题不能为空")
-            .isLength({min: 6})
-            .withMessage("密码标题长度不能少于6个字符"),
+            .withMessage("密码标题不能为空"),
+        body("username")
+            .notEmpty()
+            .withMessage("用户名不能为空"),
+        body("encrypted_password")
+            .notEmpty()
+            .withMessage("加密密码不能为空"),
         body("site_url")
             .optional()
             .isURL()
             .withMessage("站点URL格式不正确"),
+        body("notes")
+            .optional()
+            .isString()
+            .withMessage("备注必须是字符串"),
         body("categoryId")
             .optional()
             .isUUID('4')
             .withMessage("分类ID格式不正确"),
-        body("encrypted_blob").notEmpty().withMessage("加密内容不能为空"),
-        body('iv').notEmpty().withMessage("初始化向量不能为空"),
     ],
     passwordController.createPassword,
 );

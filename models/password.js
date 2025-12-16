@@ -8,9 +8,7 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            models.Password.belongsTo(models.User, {
-                as: "user",
-            });
+            models.Password.belongsTo(models.User, {as: "user",});
             models.Password.belongsTo(models.Category, {
                 as: "category",
             });
@@ -35,16 +33,20 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: DataTypes.UUIDV4,
                 allowNull: false,
             },
-            encrypted_blob: {
+            title: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            username: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            encrypted_password: {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
-            iv: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            title: {
-                type: DataTypes.STRING,
+            notes: {
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
             site_url: {
