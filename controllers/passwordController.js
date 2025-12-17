@@ -45,6 +45,7 @@ const passwordController = {
             if (!password) {
                 throw new NotFound("未找到对应的密码记录");
             }
+            req.body.encrypted_password = encrypt(req.body.encrypted_password, process.env.MASTER_PASSWORD);
             await password.update({
                 ...req.body,
             });
@@ -79,12 +80,12 @@ const passwordController = {
                 categoryId,
                 keyword,
                 paranoid,
-                currentPage = 1,
-                pageSize = 10,
-                sortBy = "id",
+                // currentPage = 1,
+                // pageSize = 10,
+                sortBy = "createdAt",
                 sortOrder = "DESC"
             } = req.query;
-            const offset = (currentPage - 1) * pageSize;
+            // const offset = (currentPage - 1) * pageSize;
 
             const userId = req.user.id;
             const whereClause = {
@@ -106,9 +107,10 @@ const passwordController = {
                     }
                 ],
                 attributes: {exclude: ['iv', 'UserId', 'CategoryId']},
-                order: [['id', 'ASC'], ['title', 'ASC']],
-                limit: parseInt(pageSize),
-                offset,
+                order: [[sortBy, sortOrder]],
+                // order: [['id', 'ASC'], ['title', 'ASC']],
+                // limit: parseInt(pageSize),
+                // offset,
                 paranoid: paranoid === 'true',
             });
             const passwords = rows.map(password => {
@@ -123,16 +125,46 @@ const passwordController = {
                 passwords,
                 pagination: {
                     total: count,
-                    currentPage: parseInt(currentPage),
-                    pageSize: parseInt(pageSize),
+                    // currentPage: parseInt(currentPage),
+                    // pageSize: parseInt(pageSize),
                 },
             });
         } catch (error) {
             failure(res, error);
         }
     },
-    async getPasswordDetail() {
-        // 获取单个密码详情
+    async getPasswordDetail(req, res) {
+        try {
+            const userId = req.user.id;
+            const passwordId = req.params.id;
+            const password = await Password.findOne({
+                where: {
+                    id: passwordId,
+                    userId: userId,
+                },
+                attributes: {exclude: ['UserId', 'CategoryId']},
+                include: [
+                    {
+                        model: Category,
+                        as: "category",
+                        attributes: ['name', 'icon'],
+                    }
+                ]
+            });
+            if (!password) {
+                throw new NotFound("未找到对应的密码记录");
+            }
+            const decryptedPassword = decrypt(password.encrypted_password, process.env.MASTER_PASSWORD);
+            const passwordDetail = {
+                ...password.toJSON(),
+                password: decryptedPassword,
+            };
+            delete passwordDetail.encrypted_password;
+
+            success(res, "成功获取密码详情", {password: passwordDetail});
+        } catch (error) {
+            failure(res, error);
+        }
     },
     async restorePassword(req, res) {
         try {

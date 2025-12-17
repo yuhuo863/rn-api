@@ -6,6 +6,10 @@ const passwordController = require("../controllers/passwordController");
 const authenticate = require("../middlewares/auth-user");
 router.use(authenticate);
 
+router.get('/', passwordController.getUserPasswords);
+
+router.get('/:id', passwordController.getPasswordDetail)
+
 router.post(
     "/",
     [
@@ -73,8 +77,6 @@ router.delete(
     ],
     passwordController.deletePassword,
 );
-
-router.get('/', passwordController.getUserPasswords);
 
 router.post('/restore',
     [
