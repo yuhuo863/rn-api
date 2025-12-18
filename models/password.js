@@ -1,5 +1,6 @@
 "use strict";
 const {Model} = require("sequelize");
+const dayjs = require("dayjs");
 module.exports = (sequelize, DataTypes) => {
     class Password extends Model {
         /**
@@ -56,6 +57,12 @@ module.exports = (sequelize, DataTypes) => {
             deletedAt: {
                 type: DataTypes.DATE,
                 allowNull: true,
+                get() {
+                    if (!this.getDataValue("deletedAt")) return null;
+                    return dayjs(this.getDataValue("deletedAt")).format(
+                        "YYYY-MM-DD HH:mm:ss",
+                    );
+                },
             },
             createdAt: {
                 type: DataTypes.DATE,
@@ -64,6 +71,12 @@ module.exports = (sequelize, DataTypes) => {
             updatedAt: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    if (!this.getDataValue("updatedAt")) return null;
+                    return dayjs(this.getDataValue("updatedAt")).format(
+                        "YYYY-MM-DD HH:mm:ss",
+                    );
+                },
             },
         },
         {

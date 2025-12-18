@@ -8,7 +8,9 @@ router.use(authenticate);
 
 router.get('/', passwordController.getUserPasswords);
 
-router.get('/:id', passwordController.getPasswordDetail)
+router.get('/trash', passwordController.getTrashPasswords);
+
+router.get('/:id', passwordController.getPasswordDetail);
 
 router.post(
     "/",

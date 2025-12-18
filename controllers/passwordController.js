@@ -79,7 +79,6 @@ const passwordController = {
             const {
                 categoryId,
                 keyword,
-                paranoid,
                 // currentPage = 1,
                 // pageSize = 10,
                 sortBy = "createdAt",
@@ -111,7 +110,6 @@ const passwordController = {
                 // order: [['id', 'ASC'], ['title', 'ASC']],
                 // limit: parseInt(pageSize),
                 // offset,
-                paranoid: paranoid === 'true',
             });
             const passwords = rows.map(password => {
                 const decryptedPassword = decrypt(password.encrypted_password, process.env.MASTER_PASSWORD);
@@ -162,6 +160,35 @@ const passwordController = {
             delete passwordDetail.encrypted_password;
 
             success(res, "成功获取密码详情", {password: passwordDetail});
+        } catch (error) {
+            failure(res, error);
+        }
+    },
+    async getTrashPasswords(req, res) {
+        try {
+            const userId = req.user.id;
+            const {count, rows: passwords} = await Password.findAndCountAll({
+                where: {
+                    userId,
+                    deletedAt: {
+                        [Op.not]: null
+                    }
+                },
+                include: [
+                    {
+                        model: Category,
+                        as: "category",
+                        attributes: ['name', 'icon'],
+                    }
+                ],
+                attributes: ['id', 'title', 'deletedAt', 'updatedAt'],
+                order: [['updatedAt', 'DESC']],
+                paranoid: false
+            })
+            success(res, "成功获取回收站密码", {
+                passwords,
+                total: count,
+            })
         } catch (error) {
             failure(res, error);
         }
