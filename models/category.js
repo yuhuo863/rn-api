@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
+            color: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
             isDefault: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,

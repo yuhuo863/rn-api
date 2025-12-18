@@ -18,6 +18,10 @@ router.post('/', [
         .optional()
         .isString()
         .withMessage("图标必须是字符串"),
+    body("color")
+        .optional()
+        .isHexColor()
+        .withMessage("颜色必须是有效的十六进制颜色值"),
 ], categoryController.createCategory);
 
 router.put('/:id', [

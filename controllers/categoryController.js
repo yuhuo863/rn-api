@@ -14,7 +14,22 @@ const categoryController = {
                 attributes: {exclude: ['UserId']},
                 order: [['createdAt', 'ASC']],
             });
-            success(res, "成功获取分类列表", {categories});
+            // 统计每个分类下的密码数量
+            const results = await Promise.all(categories.map(async (category) => {
+                const passwordsCount = await Password.count({
+                    where: {
+                        categoryId: category.id,
+                        userId: userId,
+                    },
+                });
+                return {
+                    ...category.toJSON(),
+                    passwordsCount,
+                };
+            }));
+            success(res, "成功获取分类列表", {
+                categories: results,
+            });
         } catch (error) {
             failure(res, error);
         }
@@ -32,11 +47,13 @@ const categoryController = {
             if (existingCategory) {
                 throw new BadRequest("分类名称已存在");
             }
-            await Category.create({
-                userId: userId,
+            const newCategory = await Category.create({
                 ...req.body,
+                userId: userId,
             });
-            success(res, "成功创建分类", {}, 201);
+            success(res, "成功创建分类", {
+                newCategory
+            }, 201);
         } catch (error) {
             failure(res, error);
         }
@@ -58,7 +75,18 @@ const categoryController = {
             await category.update({
                 ...req.body,
             });
-            success(res, "成功更新分类");
+            const passwordsCount = await Password.count({
+                where: {
+                    categoryId: category.id,
+                    userId: userId,
+                }
+            })
+            success(res, "成功更新分类", {
+                category: {
+                    ...category.toJSON(),
+                    passwordsCount
+                }
+            });
         } catch (error) {
             failure(res, error);
         }
@@ -87,7 +115,7 @@ const categoryController = {
                 },
             })
             if (passwordCount > 0) {
-                throw new Conflict("分类下存在密码，不能删除");
+                throw new Conflict("当前分类下存在密码，不能删除");
             }
             await category.destroy();
             success(res, "成功删除分类");
