@@ -145,7 +145,7 @@ const passwordController = {
                     {
                         model: Category,
                         as: "category",
-                        attributes: ['name', 'icon'],
+                        attributes: ['name', 'icon', 'color'],
                     }
                 ]
             });
