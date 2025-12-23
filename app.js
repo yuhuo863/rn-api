@@ -10,6 +10,16 @@ const errorHandler = require("./middlewares/error-handler");
 
 const app = express();
 
+// 启动邮件消费者
+const {mailConsumer} = require("./utils/rabbitMQ");
+(async () => {
+    await mailConsumer();
+    console.log("邮件消费者已启动");
+})();
+
+// 如果应用部署在代理（如 Nginx）后面，启用此设置以获取正确的客户端 IP
+app.set('trust proxy', 1);
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

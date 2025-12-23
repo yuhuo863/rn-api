@@ -65,6 +65,19 @@ module.exports = (sequelize, DataTypes) => {
                     this.setDataValue("password", bcrypt.hashSync(value, 10));
                 },
             },
+            avatar: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                validate: {
+                    isUrl: {msg: "图片地址不正确。"},
+                },
+            },
+            deleted: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+                comment: "是否已注销",
+            },
             sex: {
                 type: DataTypes.TINYINT,
                 allowNull: false,
@@ -75,30 +88,18 @@ module.exports = (sequelize, DataTypes) => {
                         msg: "性别的值必须是，男性：0 女性：1 未选择：2",
                     },
                 },
-                role: {
-                    type: DataTypes.TINYINT,
-                    allowNull: false,
-                    validate: {
-                        notEmpty: {msg: "用户组不能为空。"},
-                        isIn: {
-                            args: [[0, 100]],
-                            msg: "用户组的值必须是，普通用户：0 管理员：100。",
-                        },
-                    },
-                    avatar: {
-                        type: DataTypes.STRING,
-                        allowNull: true,
-                        validate: {
-                            isUrl: {msg: "图片地址不正确。"},
-                        },
-                    },
-                    deleted: {
-                        type: DataTypes.BOOLEAN,
-                        allowNull: false,
-                        defaultValue: false,
-                        comment: "是否已注销",
+            },
+            role: {
+                type: DataTypes.TINYINT,
+                allowNull: false,
+                validate: {
+                    notEmpty: {msg: "用户组不能为空。"},
+                    isIn: {
+                        args: [[0, 100]],
+                        msg: "用户组的值必须是，普通用户：0 管理员：100。",
                     },
                 },
+
             },
         },
         {
