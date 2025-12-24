@@ -1,10 +1,11 @@
 const {User} = require("../models");
-const {validationResult} = require("express-validator");
 const {NotFound, BadRequest} = require("http-errors");
 const {failure, success} = require("../utils/responses");
 const {mailProducer} = require("../utils/rabbitMQ");
 const {validatePassword} = require("../utils/validations");
 const feedbackEmailTemplate = require("../templates/feedback");
+const {singleFileUpload} = require("../utils/aliyun");
+const bcrypt = require("bcrypt");
 
 const userController = {
     async getCurrentUser(req, res) {
@@ -22,15 +23,7 @@ const userController = {
     },
     async updateUser(req, res) {
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                throw new BadRequest(
-                    `请求参数错误: ${errors
-                        .array()
-                        .map((e) => e.msg)
-                        .join(", ")}`,
-                );
-            }
+            validatePassword(req)
 
             const {id} = req.user;
             const user = await User.findByPk(id);
@@ -43,7 +36,47 @@ const userController = {
             failure(res, error);
         }
     },
-    // 注销用户
+    async uploadAvatar(req, res) {
+        try {
+            singleFileUpload(req, res, function (err) {
+                if (err) {
+                    failure(res, err);
+                }
+                if (!req.file) {
+                    failure(res, new BadRequest("未找到上传的文件"));
+                }
+
+                success(res, "文件上传成功", {file: req.file});
+            })
+        } catch (err) {
+            failure(res, err);
+        }
+    },
+    async changePassword(req, res) {
+        try {
+            validatePassword(req)
+
+            const userId = req.user.id;
+            const user = await User.findByPk(userId);
+            if (!user) {
+                throw new NotFound("用户不存在");
+            }
+            const {currentPassword, newPassword} = req.body;
+            const isPasswordValid = bcrypt.compareSync(currentPassword, user.password);
+            if (!isPasswordValid) {
+                throw new BadRequest("当前密码不正确");
+            }
+            if (currentPassword === newPassword) {
+                throw new BadRequest("新密码不能与当前密码相同");
+            }
+
+            await user.update({password: newPassword});
+
+            success(res, "密码修改成功");
+        } catch (error) {
+            failure(res, error);
+        }
+    },
     async sendFeedbackEmail(req, res) {
         try {
             validatePassword(req)
@@ -69,7 +102,21 @@ const userController = {
         } catch (error) {
             failure(res, error);
         }
-    }
+    },
+    async cancelAccount(req, res) {
+        try {
+            const userId = req.user.id;
+            const user = await User.findByPk(userId);
+            if (!user) {
+                throw new NotFound("用户不存在");
+            }
+
+            await user.update({deleted: true});
+            success(res, "用户已注销");
+        } catch (error) {
+            failure(res, error);
+        }
+    },
 };
 
 module.exports = userController;

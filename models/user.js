@@ -72,12 +72,6 @@ module.exports = (sequelize, DataTypes) => {
                     isUrl: {msg: "图片地址不正确。"},
                 },
             },
-            deleted: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false,
-                comment: "是否已注销",
-            },
             sex: {
                 type: DataTypes.TINYINT,
                 allowNull: false,
@@ -85,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
                     notEmpty: {msg: "性别不能为空"},
                     isIn: {
                         args: [[0, 1, 2]],
-                        msg: "性别的值必须是，男性：0 女性：1 未选择：2",
+                        msg: "性别的值必须是，男性：1 女性：0 未选择：2",
                     },
                 },
             },
@@ -100,6 +94,17 @@ module.exports = (sequelize, DataTypes) => {
                     },
                 },
 
+            },
+            lastReadNoticeAt: {
+                type: DataTypes.DATE,
+                allowNull: true,
+                comment: "最后一次阅读通知的时间",
+            },
+            deleted: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+                comment: "是否已注销",
             },
         },
         {

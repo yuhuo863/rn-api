@@ -12,9 +12,7 @@ router.get('/trash', passwordController.getTrashPasswords);
 
 router.get('/:id', passwordController.getPasswordDetail);
 
-router.post(
-    "/",
-    [
+router.post("/", [
         body("title")
             .notEmpty()
             .withMessage("密码标题不能为空"),
@@ -36,13 +34,10 @@ router.post(
             .optional()
             .isUUID('4')
             .withMessage("分类ID格式不正确"),
-    ],
-    passwordController.createPassword,
+    ], passwordController.createPassword,
 );
 
-router.put(
-    '/:id',
-    [
+router.put('/:id', [
         param("id")
             .notEmpty()
             .withMessage('密码ID不能为空')
@@ -64,41 +59,34 @@ router.put(
             .optional()
             .isString()
             .withMessage("加密内容必须是字符串"),
-    ],
-    passwordController.updatePassword,
+    ], passwordController.updatePassword,
 );
 
-router.delete(
-    '/:id',
-    [
+router.delete('/:id', [
         param("id")
             .notEmpty()
             .withMessage('密码ID不能为空')
             .isUUID('4')
             .withMessage("密码ID格式不正确"),
-    ],
-    passwordController.deletePassword,
+    ], passwordController.deletePassword,
 );
 
-router.post('/restore',
-    [
-        body("id")
-            .notEmpty()
-            .withMessage("密码ID不能为空")
-            .isUUID('4')
-            .withMessage("密码ID格式不正确")],
-    passwordController.restorePassword
-);
-
-router.post('/force',
-    [
+router.post('/restore', [
         body("id")
             .notEmpty()
             .withMessage("密码ID不能为空")
             .isUUID('4')
             .withMessage("密码ID格式不正确")
-    ],
-    passwordController.thoroughDelPassword
+    ], passwordController.restorePassword
+);
+
+router.post('/force', [
+        body("id")
+            .notEmpty()
+            .withMessage("密码ID不能为空")
+            .isUUID('4')
+            .withMessage("密码ID格式不正确")
+    ], passwordController.thoroughDelPassword
 );
 
 module.exports = router;

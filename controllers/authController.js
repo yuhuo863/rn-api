@@ -58,6 +58,10 @@ const authController = {
             const user = await User.findOne(condition);
             if (!user) throw new NotFound("用户不存在, 请先注册");
 
+            if (user.deleted) {
+                throw new NotFound('用户已注销，请注册新账号后再登录。')
+            }
+
             const isPasswordValid = await bcrypt.compare(password, user.password);
             if (!isPasswordValid) throw new BadRequest("用户名或密码错误");
 

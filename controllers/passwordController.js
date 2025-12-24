@@ -1,9 +1,10 @@
-const {Password, Category} = require("../models");
+const {Password, Category, Notice, User} = require("../models");
 const {NotFound} = require("http-errors");
 const {Op} = require("sequelize");
 const {success, failure} = require("../utils/responses");
 const {validatePassword} = require('../utils/validations');
 const {encrypt, decrypt} = require('../utils/encryption')
+const dayjs = require("dayjs");
 
 const passwordController = {
     async createPassword(req, res) {
@@ -79,12 +80,9 @@ const passwordController = {
             const {
                 categoryId,
                 keyword,
-                // currentPage = 1,
-                // pageSize = 10,
                 sortBy = "createdAt",
                 sortOrder = "DESC"
             } = req.query;
-            // const offset = (currentPage - 1) * pageSize;
 
             const userId = req.user.id;
             const whereClause = {
@@ -107,9 +105,6 @@ const passwordController = {
                 ],
                 attributes: {exclude: ['iv', 'UserId', 'CategoryId']},
                 order: [[sortBy, sortOrder]],
-                // order: [['id', 'ASC'], ['title', 'ASC']],
-                // limit: parseInt(pageSize),
-                // offset,
             });
             const passwords = rows.map(password => {
                 const decryptedPassword = decrypt(password.encrypted_password, process.env.MASTER_PASSWORD);
@@ -119,13 +114,10 @@ const passwordController = {
                     password: decryptedPassword,
                 };
             });
+
             success(res, "成功获取用户密码列表", {
                 passwords,
-                pagination: {
-                    total: count,
-                    // currentPage: parseInt(currentPage),
-                    // pageSize: parseInt(pageSize),
-                },
+                total: count,
             });
         } catch (error) {
             failure(res, error);
