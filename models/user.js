@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 validate: {
                     notEmpty: {msg: "用户名不能为空"},
-                    len: {args: [3, 45], msg: "用户名长度必须是3 ~ 45之间"},
+                    len: {args: [6, 45], msg: "用户名长度必须是6 ~ 45之间"},
                     async isUnique(value) {
                         const user = await User.findOne({where: {username: value}});
                         if (user) {

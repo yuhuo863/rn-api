@@ -21,7 +21,7 @@ const authController = {
                 password: req.body.password,
                 sex: 2, // 默认未选择 0男1女
                 role: 0, // 默认普通用户
-                avatar: "",
+                avatar: 'https://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/f8deb22fa157ef45902b51cbd63a622a.png',
                 deleted: false, // 默认未注销
             });
 
@@ -35,7 +35,16 @@ const authController = {
                 isDefault: true,
             });
 
-            success(res, "用户注册成功", user, 201);
+            const payload = {
+                userId: user.id,
+            };
+            const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn: "7d",
+            });
+
+            success(res, "用户注册成功", {
+                token,
+            }, 201);
         } catch (error) {
             failure(res, error);
         }
