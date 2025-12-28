@@ -2,7 +2,7 @@ const {User} = require("../models");
 const {NotFound, BadRequest} = require("http-errors");
 const {failure, success} = require("../utils/responses");
 const {mailProducer} = require("../utils/rabbitMQ");
-const {validatePassword} = require("../utils/validations");
+const {validateParams} = require("../utils/validations");
 const feedbackEmailTemplate = require("../templates/feedback");
 const {singleFileUpload} = require("../utils/aliyun");
 const bcrypt = require("bcrypt");
@@ -23,7 +23,7 @@ const userController = {
     },
     async updateUser(req, res) {
         try {
-            validatePassword(req)
+            validateParams(req)
 
             const {id} = req.user;
             const user = await User.findByPk(id);
@@ -54,7 +54,7 @@ const userController = {
     },
     async changePassword(req, res) {
         try {
-            validatePassword(req)
+            validateParams(req)
 
             const userId = req.user.id;
             const user = await User.findByPk(userId);
@@ -79,7 +79,7 @@ const userController = {
     },
     async sendFeedbackEmail(req, res) {
         try {
-            validatePassword(req)
+            validateParams(req)
 
             const userId = req.user.id;
             const user = await User.findByPk(userId);

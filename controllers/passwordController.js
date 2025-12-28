@@ -2,14 +2,14 @@ const {Password, Category, Notice, User} = require("../models");
 const {NotFound} = require("http-errors");
 const {Op} = require("sequelize");
 const {success, failure} = require("../utils/responses");
-const {validatePassword} = require('../utils/validations');
+const {validateParams} = require('../utils/validations');
 const {encrypt, decrypt} = require('../utils/encryption')
 const dayjs = require("dayjs");
 
 const passwordController = {
     async createPassword(req, res) {
         try {
-            validatePassword(req)
+            validateParams(req)
             let findCategoryId = req.body.categoryId
             if (!findCategoryId) {
                 const defaultCategory = await Category.findOne({
@@ -34,7 +34,7 @@ const passwordController = {
     },
     async updatePassword(req, res) {
         try {
-            validatePassword(req);
+            validateParams(req);
             const userId = req.user.id;
             const passwordId = req.params.id;
             const password = await Password.findOne({
@@ -57,7 +57,7 @@ const passwordController = {
     },
     async deletePassword(req, res) {
         try {
-            validatePassword(req)
+            validateParams(req)
             const userId = req.user.id;
             const passwordId = req.params.id;
             const password = await Password.findOne({
@@ -187,7 +187,7 @@ const passwordController = {
     },
     async restorePassword(req, res) {
         try {
-            validatePassword(req);
+            validateParams(req);
             let message = '已恢复成功。';
             const {id} = req.body;
             // 这里的 ID，可以是单条记录值, 也可以是数组
@@ -201,7 +201,7 @@ const passwordController = {
     },
     async thoroughDelPassword(req, res) {
         try {
-            validatePassword(req);
+            validateParams(req);
             let message = '已彻底删除。';
             const {id} = req.body;
             // 这里的 ID，可以是单条记录值, 也可以是数组

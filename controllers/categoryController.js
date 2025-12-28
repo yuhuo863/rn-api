@@ -1,6 +1,6 @@
 const {Category, Password} = require("../models");
 const {failure, success} = require("../utils/responses");
-const {validatePassword} = require('../utils/validations');
+const {validateParams} = require('../utils/validations');
 const {BadRequest, NotFound, Conflict} = require("http-errors");
 
 const categoryController = {
@@ -36,7 +36,7 @@ const categoryController = {
     },
     async createCategory(req, res) {
         try {
-            validatePassword(req);
+            validateParams(req);
             const userId = req.user.id;
             const existingCategory = await Category.findOne({
                 where: {
@@ -60,7 +60,7 @@ const categoryController = {
     },
     async updateCategory(req, res) {
         try {
-            validatePassword(req);
+            validateParams(req);
             const userId = req.user.id;
             const categoryId = req.params.id;
             const category = await Category.findOne({
@@ -93,7 +93,7 @@ const categoryController = {
     },
     async deleteCategory(req, res) {
         try {
-            validatePassword(req);
+            validateParams(req);
             const userId = req.user.id;
             const categoryId = req.params.id;
             const category = await Category.findOne({

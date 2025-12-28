@@ -10,8 +10,10 @@ router.post(
         body("username")
             .notEmpty()
             .withMessage("用户名不能为空")
-            .isLength({min: 3})
-            .withMessage("用户名长度至少为3个字符"),
+            .matches(/^[a-zA-Z][a-zA-Z0-9]*$/)
+            .withMessage("用户名只能包含字母或数字，且不能以数字开头")
+            .isLength({min: 5})
+            .withMessage("用户名长度至少为5个字符"),
         body("email")
             .notEmpty()
             .withMessage("邮箱不能为空")
