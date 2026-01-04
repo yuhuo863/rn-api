@@ -35,14 +35,14 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             title: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
             username: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
-            encrypted_password: {
+            password: {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: true,
             },
             site_url: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true,
             },
             deletedAt: {

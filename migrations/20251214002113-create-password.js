@@ -17,13 +17,7 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.UUID,
             },
-            encrypted_blob: {
-                // 加密后的密码数据(AES加密后的 JSON 字符串，包含 username, password, notes)
-                allowNull: false,
-                type: Sequelize.TEXT,
-            },
-            iv: {
-                // 初始化向量，用于解密
+            password: {
                 allowNull: false,
                 type: Sequelize.STRING,
             },

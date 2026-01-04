@@ -1,10 +1,8 @@
-const {Password, Category, Notice, User} = require("../models");
+const {Password, Category} = require("../models");
 const {NotFound} = require("http-errors");
 const {Op} = require("sequelize");
 const {success, failure} = require("../utils/responses");
 const {validateParams} = require('../utils/validations');
-const {encrypt, decrypt} = require('../utils/encryption')
-const dayjs = require("dayjs");
 
 const passwordController = {
     async createPassword(req, res) {
@@ -20,12 +18,10 @@ const passwordController = {
                 })
                 findCategoryId = defaultCategory ? defaultCategory.id : undefined
             }
-            const encryptedPassword = encrypt(req.body.encrypted_password, process.env.MASTER_PASSWORD);
             await Password.create({
                 ...req.body,
                 userId: req.user.id,
                 categoryId: findCategoryId,
-                encrypted_password: encryptedPassword,
             });
             success(res, "成功创建密码", {}, 201);
         } catch (error) {
@@ -46,7 +42,6 @@ const passwordController = {
             if (!password) {
                 throw new NotFound("未找到对应的密码记录");
             }
-            req.body.encrypted_password = encrypt(req.body.encrypted_password, process.env.MASTER_PASSWORD);
             await password.update({
                 ...req.body,
             });
@@ -106,17 +101,9 @@ const passwordController = {
                 attributes: {exclude: ['iv', 'UserId', 'CategoryId']},
                 order: [[sortBy, sortOrder]],
             });
-            const passwords = rows.map(password => {
-                const decryptedPassword = decrypt(password.encrypted_password, process.env.MASTER_PASSWORD);
-                delete password.dataValues.encrypted_password;
-                return {
-                    ...password.toJSON(),
-                    password: decryptedPassword,
-                };
-            });
 
             success(res, "成功获取用户密码列表", {
-                passwords,
+                passwords: rows,
                 total: count,
             });
         } catch (error) {
@@ -144,14 +131,8 @@ const passwordController = {
             if (!password) {
                 throw new NotFound("未找到对应的密码记录");
             }
-            const decryptedPassword = decrypt(password.encrypted_password, process.env.MASTER_PASSWORD);
-            const passwordDetail = {
-                ...password.toJSON(),
-                password: decryptedPassword,
-            };
-            delete passwordDetail.encrypted_password;
 
-            success(res, "成功获取密码详情", {password: passwordDetail});
+            success(res, "成功获取密码详情", {password});
         } catch (error) {
             failure(res, error);
         }

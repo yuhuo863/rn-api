@@ -11,7 +11,7 @@
  Target Server Version : 80405 (8.4.5)
  File Encoding         : 65001
 
- Date: 28/12/2025 01:16:09
+ Date: 05/01/2026 02:31:16
 */
 
 SET NAMES utf8mb4;
@@ -65,9 +65,18 @@ CREATE TABLE `Notices`  (
 -- ----------------------------
 -- Records of Notices
 -- ----------------------------
-INSERT INTO `Notices` VALUES ('12de2a9c-4598-4044-ba5e-0ae554cd73ff', '服务维护通知', '我们将于本周日凌晨进行服务器维护，预计耗时2小时。', 1, '2025-12-24 21:37:45');
-INSERT INTO `Notices` VALUES ('25a7235f-9c2c-434f-a739-5d6b27ff0075', '修复了若干bug', '我们修复了导致部分用户无法重置密码的问题，并优化了启动速度。', 1, '2025-12-24 20:04:16');
-INSERT INTO `Notices` VALUES ('ea5f24de-232c-468d-b6b1-bb5edf3826b8', 'V1.0.1 版本已发布', '全新密码生成器上线！支持自定义长度、特殊字符混淆，快来体验吧。', 2, '2025-12-24 21:37:13');
+INSERT INTO `Notices` VALUES ('0ebcf45f-3ed5-40c9-a377-a297f7bbb11e', '功能更新：支持导入第三方 Chrome 密码库 内容', '好消息！\\n\\n现在您可以更方便地迁移数据了。新版本支持直接导入 Chrome 浏览器导出的 CSV 格式密码文件。\\n\\n操作路径：设置 > 数据管理 > 导入数据。我们将引导您完成加密转换。', 2, '2025-12-28 23:48:02');
+INSERT INTO `Notices` VALUES ('12de2a9c-4598-4044-ba5e-0ae554cd73ff', '关于系统例行维护及安全升级的公告', '尊敬的用户：\\n\\n为了持续提升系统的稳定性和加密算法的安全强度，我们将于 2023年10月29日（周日）凌晨 02:00 - 04:00 进行例行服务器维护及数据库架构优化。\\n\\n受影响范围：\\n• 维护期间，APP 将暂时无法使用同步及云端备份功能。\\n• 已开启“离线模式”的用户仍可正常查看已缓存的密码条目。\\n\\n请您提前做好相关准备。感谢您的理解与支持，我们将竭诚为您保护每一份数据安全。', 1, '2025-12-24 21:37:45');
+INSERT INTO `Notices` VALUES ('25a7235f-9c2c-434f-a739-5d6b27ff0075', '系统优化与稳定性修复处理报告', '感谢广大用户近期向我们反馈的使用问题。经过技术团队的紧急排查与修复，我们在本次更新中解决了以下已知问题：\\n\\n修复与优化项：\\n• 登录异常：修复了在部分高版本系统下，生物识别（指纹/面容）偶尔失效的问题。\\n• 重置流程：解决了部分地区用户在重置主密码时无法及时接收验证邮件的延迟问题。\\n• 性能提升：优化了本地加密库的运算效率，大幅缩短了解密加载时间。\\n\\n我们建议您保持应用为最新版本，以获得最稳健的安全防护体验。', 1, '2025-12-24 20:04:16');
+INSERT INTO `Notices` VALUES ('40630ea1-a21c-46ca-9c88-b3ab8a8a613e', '关于旧版本 App 停止维护的通知', '为了保证加密算法的最新安全性，我们将于下月起停止对 V0.9 以下版本的服务器支持。\\n\\n请您务必尽快在应用商店更新至最新版本，以免影响云端同步和生物识别功能的正常使用。', 1, '2025-12-28 23:48:59');
+INSERT INTO `Notices` VALUES ('4e11b561-a0a8-43f9-960c-9166e2923e20', '交互优化：生物识别（FaceID/指纹）逻辑重构', '更新日志：\\n\\n我们优化了生物识别的唤醒速度。现在当应用进入后台 10 秒后重新切回时，将自动弹出验证请求，无需手动点击。\\n\\n同时修复了部分安卓机型指纹识别后黑屏的偶发问题。', 2, '2025-12-28 23:49:48');
+INSERT INTO `Notices` VALUES ('66390d0b-fe9d-4cd2-8b6c-e73ea0fb1325', 'V1.0.2 版本发布：新增“安全剪贴板”功能', '新功能上线：\\n\\n本次更新新增了“安全剪贴板”保护机制。当您复制密码后，系统将在 60 秒后自动清除剪贴板内容，有效防止恶意软件读取您的隐私。\\n\\n您可以在“设置 > 偏好”中自定义清除时间。', 2, '2025-12-28 23:46:41');
+INSERT INTO `Notices` VALUES ('98f00b12-9e2d-4e0e-9212-a898a3036590', '账户安全中心：强制开启双重认证 (2FA) 建议', '安全预警：\\n\\n近期监测到多起针对第三方平台的撞库攻击。为了您的密码库安全，我们强烈建议您前往“设置 > 安全中心”开启双重认证。\\n\\n开启后，即便密码泄露，没有您的授权码也无法访问数据。安全无小事，请务必重视。', 1, '2025-12-28 23:44:20');
+INSERT INTO `Notices` VALUES ('9f3d93ef-5647-4ad5-87c1-1ffa69b3b842', '功能升级：支持附件加密存储（预览版）', '重大更新：\\n\\n除了文本密码，您现在可以为每个条目添加少量的附件（如备份码截图、身份证正反面图片）。所有附件均经过 AES-256 同等级别加密存储。\\n\\n当前版本仅支持图片及 PDF 格式。', 2, '2025-12-28 23:48:40');
+INSERT INTO `Notices` VALUES ('ba701ff4-aba3-4551-9eb9-d21f5f16f90c', '隐私协议与数据处理规则更新公告', '重要更新：\\n\\n我们更新了《用户隐私协议》，详细说明了零知识加密（Zero-Knowledge）在本地存储中的应用逻辑。本次更新不涉及数据共享，仅为技术透明化展示。\\n\\n您可以点击详情查看最新的协议全文。', 1, '2025-12-28 23:49:28');
+INSERT INTO `Notices` VALUES ('d3c1fbd6-c10b-4959-8053-b35513d88403', '关于服务器接入商骨干网络升级的通知', '尊敬的用户：\\n\\n接到服务商通知，其计划于本周五凌晨 03:00 对骨干网络设备进行升级。届时应用可能会出现短暂的连接中断（预计持续 5 分钟）。\\n\\n请在相关时段避免执行重要的数据同步操作。感谢您的配合。', 1, '2025-12-28 23:43:56');
+INSERT INTO `Notices` VALUES ('d933e0bd-bed3-4d53-87e0-13242e7d6c67', '界面优化：全新侧边栏导航与主题色切换', '视觉体验升级：\\n\\n我们重构了导航布局，现在通过左侧边栏即可快速触达所有分类。同时新增了 3 款深色模式下的主题配色方案，满足您的个性化视觉需求。\\n\\n快去“设置 > 界面”中体验吧！', 2, '2025-12-28 23:48:24');
+INSERT INTO `Notices` VALUES ('ea5f24de-232c-468d-b6b1-bb5edf3826b8', 'V1.0.1 正式版发布：全新安全组件上线', '我们很高兴地宣布 V1.0.1 版本正式发布。本次更新不仅是版本号的跳跃，更是核心功能的全面升级：\\n\\n新功能特性：\\n• 智能密码生成器：新增符合 NIST 标准的高强度随机算法，支持自定义特殊字符排斥规则。\\n• 安全审计报告：现在您可以一键检测库中存在的重复密码、弱密码及已泄露密码。\\n• UI 交互重构：采用了更符合人体工程学的深色模式布局，为您带来沉浸且专业的管理体验。\\n\\n密码管理，稳如泰山。立即更新，开启您的安全数字生活新篇章。', 2, '2025-12-24 21:37:13');
 
 -- ----------------------------
 -- Table structure for Passwords
@@ -77,13 +86,13 @@ CREATE TABLE `Passwords`  (
   `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `userId` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `categoryId` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `site_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `site_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `deletedAt` datetime NULL DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `encrypted_password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `username` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `passwords_user_id`(`userId` ASC) USING BTREE,
@@ -93,18 +102,7 @@ CREATE TABLE `Passwords`  (
 -- ----------------------------
 -- Records of Passwords
 -- ----------------------------
-INSERT INTO `Passwords` VALUES ('07000be1-41ad-453e-bff9-61f192bcb7c4', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'c69c0f9d-c38b-4925-b897-8889beb0182c', 'X', NULL, NULL, '2025-12-16 23:23:50', '2025-12-22 15:48:52', 'test003', 'eyJzYWx0IjoiN2IyOGY1YzViODcwM2RkYzZmMjIxMjlhZjUyNDkxMjYiLCJpdiI6IjE3NzNhNGMyYzhhNDYyM2FiYWMyNGI0ZjJiZmM4YmY2IiwiYXV0aFRhZyI6ImExZTUxNjFjODA0NGQyNGRiZWMyZGUyMDQ3M2Y1NTc3IiwiZW5jcnlwdGVkRGF0YSI6IjJhNWU2ZjcyMzJlZTUxMzAifQ==', '666');
-INSERT INTO `Passwords` VALUES ('0cf6f237-0acc-40aa-b543-22a723fa2259', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '288e319c-4391-4e70-af84-618a43792ea3', '中国交通银行', NULL, '2025-12-27 22:15:22', '2025-12-27 22:14:17', '2025-12-27 22:15:22', '41241113694523211', 'eyJzYWx0IjoiNDUxZjhlMDMzNDhmMGUwZjIwNmVjYTNkYzU1OTMwMjUiLCJpdiI6IjBmMzNlOGU0OThkNDUzODAzZDM0M2JhMTkzODgxYzc3IiwiYXV0aFRhZyI6IjZkMGE4YTk1Y2Y5MTkzYThlNjllNzQxNWQ2YzM2Nzc1IiwiZW5jcnlwdGVkRGF0YSI6ImM4YTM0YzNjMmM4OWZmOTUifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('10d52d08-f134-4208-893f-e1211c4b49ab', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'ae7703c0-a5d9-424f-a86c-48635ce8a4b2', 'Github', NULL, NULL, '2025-12-18 18:23:04', '2025-12-27 22:13:17', 'whatare@qq.com', 'eyJzYWx0IjoiZjZkYTFjYjVhYjBiMGQ0NWYzMGFiOTJlNTc3OTc5YzUiLCJpdiI6ImU5MjkwMDY5NmU2MjZkZjQ3MDk2ODdhYWM0MmVmNjQ4IiwiYXV0aFRhZyI6IjBhMjMyNDlmNDNmMjE3NGUxZGViNWYwYzM4YzVkMzcwIiwiZW5jcnlwdGVkRGF0YSI6IjczMTI0M2FmMGUwY2QxOTQifQ==', '123');
-INSERT INTO `Passwords` VALUES ('1a09d339-8d6c-4032-8372-662185892c24', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '25fc0a63-9cc4-414b-81bc-602508738f5c', 'Gmail', NULL, NULL, '2025-12-18 17:52:55', '2025-12-27 15:27:14', 'yuhuo@gmail.com', 'eyJzYWx0IjoiMDlkMGFjYjQxOGEyZjgxZDZiZTVlYjJjODM3ZDc3M2IiLCJpdiI6IjFmYmRjMjA0N2FlZmIzNTBlYTJmOTBiMzIwMGM3YmE4IiwiYXV0aFRhZyI6IjMxMTVhOWVhNTQ0NDhiMWMxZmEzNDBiZTQ1N2ZiZDljIiwiZW5jcnlwdGVkRGF0YSI6IjA4ZGY2NmFhNjEwMDU2M2YifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('3307fcd2-7e00-410d-9c6e-925f8b982b27', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '1be052a1-ec22-4d2d-93c0-ba2a59bef881', 'Steam', NULL, NULL, '2025-12-19 21:36:47', '2025-12-27 22:10:02', 'steam', 'eyJzYWx0IjoiN2Q0NTk1YjJmNGYwODNjODAzMDEzOWJmYTUwODdkZTgiLCJpdiI6IjQ4MGJiZWJmMjEyZjJkOTU5MTNjZjUxZDhiOTJiNjJjIiwiYXV0aFRhZyI6ImY5YTE4YjQ3ZTkyMTc4YzkzNzVmNTM0NjAwNTEwODY1IiwiZW5jcnlwdGVkRGF0YSI6ImJlYWMzODA1MjFlZjQ1OTMifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('48e96f34-2b2d-4044-8302-29574f3dd812', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '288e319c-4391-4e70-af84-618a43792ea3', '中国农业银行', NULL, NULL, '2025-12-19 22:17:21', '2025-12-24 13:54:59', '61124122478567412', 'eyJzYWx0IjoiNmU3M2YyYzJmZWQ4MDg4MjQ5YTY4NTY2OWY1ZTVkNWUiLCJpdiI6IjQ5YjMxYzhmMGI1YThiMGY4YWVjNzVmNTRlOWI0NGE2IiwiYXV0aFRhZyI6ImU2ZTlmNDIxM2U0YjhjMWEzNWY1MjZlMjk4ODE3ODEwIiwiZW5jcnlwdGVkRGF0YSI6ImUzMTk2YjhkMjcwZmFkZTYifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('54330247-779e-447f-b3a8-87b2caa49935', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'a268dbf5-464f-4f21-a121-49f9dea2ea66', 'WeChat', NULL, '2025-12-19 22:03:46', '2025-12-17 20:57:22', '2025-12-19 22:03:46', 'test005', 'eyJzYWx0IjoiYjhlZjExMGIzOGJmMDA1Zjg4Zjk1ODQ3NTZmNmU5MGUiLCJpdiI6ImVjMjI0Y2I0MmY0NDU1YmYzYzViOTZlNjk0OTgyODY5IiwiYXV0aFRhZyI6Ijk0N2RhMTg3OTUyYjk4OTM4NGFiOTI4YjI4MjdjNjA4IiwiZW5jcnlwdGVkRGF0YSI6IjMxNWM5MmFkZmRmYzQ2MzQifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('6e4a80b5-a3a0-40ce-8f5f-ce69023b8015', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '288e319c-4391-4e70-af84-618a43792ea3', '中国建设银行', NULL, NULL, '2025-12-19 21:32:42', '2025-12-24 12:19:35', '4122141532214521', 'eyJzYWx0IjoiOGE5MTRjMTRkYTk5YWYyNTU3OWNlMmJlZWU3NDBiY2EiLCJpdiI6IjcyYmQyZWFjZGNhODVmY2M0NDcyMDUxM2YxZTY1YmViIiwiYXV0aFRhZyI6Ijk1NGNlNzBiODQwZDQ1ZjUxZGJmYjc1YWRiMGY2NGQ4IiwiZW5jcnlwdGVkRGF0YSI6ImE4NGMyMDFmZjQxNGUzNDkifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('8c7c5627-cf5e-4534-a832-41d23686184f', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'ae7703c0-a5d9-424f-a86c-48635ce8a4b2', 'Google', NULL, NULL, '2025-12-16 23:18:38', '2025-12-19 22:12:28', 'test001', 'eyJzYWx0IjoiMGEzM2NmMTgyNzk5NDFhZjE3OGJmYTEzNjExMjk5YTYiLCJpdiI6IjhkNzc0NzM1ZGY0OWZiMGVmMzM2NDYwM2FiMTU4ZDhmIiwiYXV0aFRhZyI6IjdiOTljNDA1ZjljYjE3MmM5NjliZDQ1Y2YwZGIxMTcwIiwiZW5jcnlwdGVkRGF0YSI6IjNhYjkwMDlkNWYzNGNmMmUifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('cee56b66-f9a0-47b9-a2cb-21026727237b', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'c69c0f9d-c38b-4925-b897-8889beb0182c', 'Facebook', NULL, NULL, '2025-12-16 22:48:59', '2025-12-22 15:50:44', 'test004', 'eyJzYWx0IjoiNDFkMTYyM2YxYzc5ZjNkZWY5ZDAyZjdiOGM1NmI1OTciLCJpdiI6IjM4NTVmNDUyYTYxOGE4MzQ5YjZmNzQxMjU5OWRhYTM3IiwiYXV0aFRhZyI6ImEwNDI4ZjI5MDY3NWFkYjhiZDM3YmIwM2FjYWFiNzc0IiwiZW5jcnlwdGVkRGF0YSI6Ijc5ODg4YWM4ODhjMzMyYjgifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('e0667f01-1034-45d3-a37b-647e4def6f02', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'a268dbf5-464f-4f21-a121-49f9dea2ea66', 'QQ', NULL, '2025-12-24 13:38:25', '2025-12-20 01:10:47', '2025-12-24 13:38:25', '1872848105', 'eyJzYWx0IjoiMGI2Mzk2Nzg4MDc1ZDk2MmE5MTc5YWMyMzZlZGY2Y2QiLCJpdiI6ImU0YTAzYzY2YjM3YTUwZWYxY2JmZmIzYmE2NjQwMmMxIiwiYXV0aFRhZyI6IjFhMWQ4OTZkZWZlODA4Y2ZlZWFkZWZkNWRlYmJmM2E2IiwiZW5jcnlwdGVkRGF0YSI6IjU0MjAxZmM1ZmY0YWMyZGMifQ==', NULL);
-INSERT INTO `Passwords` VALUES ('edb3eaa3-e5be-4f19-bac4-1955deb7474f', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'a268dbf5-464f-4f21-a121-49f9dea2ea66', 'Instagram', 'https://www.instagram.com/', NULL, '2025-12-18 01:26:21', '2025-12-20 03:10:37', 'test1', 'eyJzYWx0IjoiOTQzNWZhM2Q1Y2Q1MDM3NTlhNjNiZGY3YTUyZWIyZjAiLCJpdiI6IjAyYTIxMzVkYTA1YzNiYjg2NmY4ZTEzZjNjMjljMWM4IiwiYXV0aFRhZyI6IjRjZWJmMzY5MjVhYTQ4NzM5NTY3NjM4MGM4ZDQyNDQ5IiwiZW5jcnlwdGVkRGF0YSI6IjBmNGZmZTM4M2Y5MzkyYzcifQ==', '个人 ins 主号（仅移动端登录）');
+INSERT INTO `Passwords` VALUES ('bbab0338-3c98-4951-9b92-57875cd048a3', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'c69c0f9d-c38b-4925-b897-8889beb0182c', 'a622c5bf89eba3766cf4b2ac:a3d26a6fe92a678d80225e1d5822bb9e:a6bea0145356bf32a4440b73', NULL, NULL, '2026-01-05 02:13:07', '2026-01-05 02:13:07', 'b0ebfeaa49a668a1a4ae80d9:a20b49844d0509e572b5a8a09117e4d0:153be3', '59c98d40dda4ded093241019:c217bbc94190a6df99e55a3cee420e35:578d8a', NULL);
 
 -- ----------------------------
 -- Table structure for SequelizeMeta
@@ -153,6 +151,6 @@ CREATE TABLE `Users`  (
 -- Records of Users
 -- ----------------------------
 INSERT INTO `Users` VALUES ('77800f2c-031e-45b8-b38b-fe15fe735ff2', 'yuhuo1', 'http://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/3bf5b78dd9658195e60c20f02a2f102d.png', '1872848105@gmail.com', '$2b$10$29FGyR5fR00zZdbHxpmWG.aoULUtcj1CqkpcvZp0JgDm8srbXAzpW', 1, 0, NULL, 0, '2025-12-27 14:58:06', '2025-12-27 14:58:59');
-INSERT INTO `Users` VALUES ('967f7842-2a09-449f-9952-d6e5c9d2cb47', 'test005', 'http://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/48e96c9feb163c25bb6ff3f1856179f2.jpeg', '1872848105@qq.com', '$2b$10$424plkxpAfUO987tZBHcPenuyMrcDxAgiFKXzUY7D5tmexr3I3PXq', 1, 0, NULL, 0, '2025-12-14 11:20:26', '2025-12-24 23:51:21');
+INSERT INTO `Users` VALUES ('967f7842-2a09-449f-9952-d6e5c9d2cb47', 'test005', 'http://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/28cfeb9a5a05b8e5a87edcc373e31395.jpeg', '1872848105@qq.com', '$2b$10$424plkxpAfUO987tZBHcPenuyMrcDxAgiFKXzUY7D5tmexr3I3PXq', 1, 0, NULL, 0, '2025-12-14 11:20:26', '2025-12-29 19:39:37');
 
 SET FOREIGN_KEY_CHECKS = 1;
