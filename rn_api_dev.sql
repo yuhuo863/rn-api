@@ -11,7 +11,7 @@
  Target Server Version : 80405 (8.4.5)
  File Encoding         : 65001
 
- Date: 05/01/2026 02:31:16
+ Date: 06/01/2026 00:10:59
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ INSERT INTO `Categories` VALUES ('7510a0d4-fa14-4b02-a894-9cad6d3c4a0c', '967f78
 INSERT INTO `Categories` VALUES ('a268dbf5-464f-4f21-a121-49f9dea2ea66', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '社交媒体', 'comments', '#9B6B64', 0, '2025-12-14 14:55:49', '2025-12-27 23:54:19');
 INSERT INTO `Categories` VALUES ('a7bfd31f-59bb-4d16-b65c-b73e7535e78f', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '身份证件', 'id-card', '#6B4E57', 0, '2025-12-18 17:22:08', '2025-12-27 23:54:59');
 INSERT INTO `Categories` VALUES ('ae7703c0-a5d9-424f-a86c-48635ce8a4b2', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '网站媒介', 'globe', '#587B7A', 0, '2025-12-18 18:12:58', '2025-12-27 23:55:26');
-INSERT INTO `Categories` VALUES ('c69c0f9d-c38b-4925-b897-8889beb0182c', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '默认分类', 'hashtag', '#6D7A7C', 1, '2025-12-14 11:20:26', '2025-12-27 23:53:44');
+INSERT INTO `Categories` VALUES ('c69c0f9d-c38b-4925-b897-8889beb0182c', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '默认分类', 'hashtag', '#6D7A7C', 1, '2025-12-14 11:20:26', '2026-01-05 23:19:18');
 INSERT INTO `Categories` VALUES ('e1dd6abe-89a9-4782-8019-4cf2cad686bc', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '金融理财', 'line-chart', '#8A7B5A', 0, '2025-12-18 23:55:46', '2025-12-28 00:26:54');
 
 -- ----------------------------
@@ -102,7 +102,10 @@ CREATE TABLE `Passwords`  (
 -- ----------------------------
 -- Records of Passwords
 -- ----------------------------
-INSERT INTO `Passwords` VALUES ('bbab0338-3c98-4951-9b92-57875cd048a3', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'c69c0f9d-c38b-4925-b897-8889beb0182c', 'a622c5bf89eba3766cf4b2ac:a3d26a6fe92a678d80225e1d5822bb9e:a6bea0145356bf32a4440b73', NULL, NULL, '2026-01-05 02:13:07', '2026-01-05 02:13:07', 'b0ebfeaa49a668a1a4ae80d9:a20b49844d0509e572b5a8a09117e4d0:153be3', '59c98d40dda4ded093241019:c217bbc94190a6df99e55a3cee420e35:578d8a', NULL);
+INSERT INTO `Passwords` VALUES ('076ff84f-e2aa-4b51-b170-3180c6d61f17', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'ae7703c0-a5d9-424f-a86c-48635ce8a4b2', '3cef17e97d18f5b49b7fdf20:95d48dbab3c4024566ec7f3b1259dd5e:6c3cd267308b', NULL, NULL, '2026-01-06 00:09:34', '2026-01-06 00:09:34', '92bc55bcb92b57f34148dfa8:ac17b0ad6aaf88ebc95d34d5289d8552:7efd2d8f33bca16ad76ccb1963e2482a9e', '1844ea15449132522dd2ebb6:b8e99610f84b1fe587145a702d67fcc1:25d5e03e1e8b1d05', '6aec559d897c6cd188a280c1:5ada09e6c69698bf7b15f2517e8ec12a:9bbe59');
+INSERT INTO `Passwords` VALUES ('7ded16b8-018e-4fe6-b7b9-ac5a7df2c924', '967f7842-2a09-449f-9952-d6e5c9d2cb47', '25fc0a63-9cc4-414b-81bc-602508738f5c', '668fd435076c65a0a81d65bc:8bfdeacd86810ba383db1acaf096d8d3:5a014bd94a65', NULL, NULL, '2026-01-06 00:05:00', '2026-01-06 00:05:00', '6ee4ca50bba20207bbf90183:c3aea3baa7798d3d2c072e4d050885d6:932cd2ca97ab5b4329646a1b8d6271d3', '77610c5f700fe4bb17a00d0b:3d7b87459275ff7153255bbd8a4c12bc:b5e5193be38f4612', NULL);
+INSERT INTO `Passwords` VALUES ('a4239171-86f2-4200-9218-81312cb2e461', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'c69c0f9d-c38b-4925-b897-8889beb0182c', '0cb9cd891b80a2bd507acb04:43774f47ad42898b560c2d8a37e54a79:6613b87ab539', NULL, NULL, '2026-01-05 21:46:00', '2026-01-05 23:19:06', '8e2bc7a3281c489774a4da6b:d41f81e3b795a1e7d6612d12922fcd7c:7dbeeab4b3e86622a9a6', '0a26c30d90a99131bbf14a42:6f6676ab70697a40a851a39c40f848d2:3aa69223927d7f22', NULL);
+INSERT INTO `Passwords` VALUES ('cd6d7c41-af64-4c39-8123-dec768a371a7', '967f7842-2a09-449f-9952-d6e5c9d2cb47', 'a268dbf5-464f-4f21-a121-49f9dea2ea66', '4177189d93c51388367fde7f:95cd81b11e1c0eb893d2d27637e813bb:8bde862b8d6b5c4e5c', NULL, NULL, '2026-01-06 00:10:34', '2026-01-06 00:10:34', '9bfd97426ba4e5cd051fc146:2d4041f7e11a9a75c695423387fd739e:f9b1198a216315ee4c2098911dad81fa0a', '198cded45d6586b2f6106969:ff4010d376099e7b8afafb33992c6d8a:dca63d7596c6f17b', '2a90259d423e8a2eff108fdc:5a057fddd0342e304ded94434bb11380:9f880a');
 
 -- ----------------------------
 -- Table structure for SequelizeMeta
@@ -151,6 +154,6 @@ CREATE TABLE `Users`  (
 -- Records of Users
 -- ----------------------------
 INSERT INTO `Users` VALUES ('77800f2c-031e-45b8-b38b-fe15fe735ff2', 'yuhuo1', 'http://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/3bf5b78dd9658195e60c20f02a2f102d.png', '1872848105@gmail.com', '$2b$10$29FGyR5fR00zZdbHxpmWG.aoULUtcj1CqkpcvZp0JgDm8srbXAzpW', 1, 0, NULL, 0, '2025-12-27 14:58:06', '2025-12-27 14:58:59');
-INSERT INTO `Users` VALUES ('967f7842-2a09-449f-9952-d6e5c9d2cb47', 'test005', 'http://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/28cfeb9a5a05b8e5a87edcc373e31395.jpeg', '1872848105@qq.com', '$2b$10$424plkxpAfUO987tZBHcPenuyMrcDxAgiFKXzUY7D5tmexr3I3PXq', 1, 0, NULL, 0, '2025-12-14 11:20:26', '2025-12-29 19:39:37');
+INSERT INTO `Users` VALUES ('967f7842-2a09-449f-9952-d6e5c9d2cb47', 'test005', 'http://xnbjb-oss.oss-cn-wuhan-lr.aliyuncs.com/uploads/94eea43504856f8c716e604fef3123c2.jpeg', '1872848105@qq.com', '$2b$10$RTn6Is0uWvOM2yAr9.qrzewg.Uiu8CacTu2g6gtHMqpstZrttxb8C', 1, 0, '2026-01-05 23:56:18', 0, '2025-12-14 11:20:26', '2026-01-05 23:56:18');
 
 SET FOREIGN_KEY_CHECKS = 1;

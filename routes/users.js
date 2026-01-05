@@ -23,7 +23,7 @@ router.put("/me", [
         .withMessage("头像链接不能超过255个字符"),
     body("sex").optional().isIn([0, 1, 2]).withMessage("性别必须是 0（女）、1（男）或 2（未选择）"),
 ], userController.updateUser);
-router.post('/change-password', [
+router.post('/reset-master-password', [
     body('currentPassword')
         .notEmpty()
         .withMessage('当前密码不能为空')
@@ -34,7 +34,10 @@ router.post('/change-password', [
         .withMessage('新密码不能为空')
         .isLength({min: 8, max: 45})
         .withMessage('新密码长度必须是8到45个字符'),
-], userController.changePassword);
+    body('items')
+        .isArray()
+        .withMessage('加密数据项必须是数组')
+], userController.resetMasterPasswordAndReEncrypt);
 router.post("/upload", userController.uploadAvatar);
 router.post("/feedback", [
     body("feedbackType")

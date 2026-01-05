@@ -78,7 +78,7 @@ const authController = {
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: "7d",
             });
-            success(res, "登录成功", {token});
+            success(res, "登录成功", {token, user, system_pepper: process.env.SYSTEM_PEPPER});
         } catch (error) {
             failure(res, error);
         }
