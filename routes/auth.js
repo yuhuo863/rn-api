@@ -26,11 +26,6 @@ router.post(
             .withMessage("密码不能为空")
             .isLength({min: 8})
             .withMessage("密码长度至少为8个字符"),
-        body("confirmPassword")
-            .notEmpty()
-            .withMessage("确认密码不能为空")
-            .custom((value, {req}) => value === req.body.password)
-            .withMessage("两次输入的密码不一致"),
     ],
     authController.register,
 );

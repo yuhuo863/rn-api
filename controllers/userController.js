@@ -84,9 +84,10 @@ const userController = {
                         // 其他加密字段...
                     },
                     {
+                        paranoid: false, // 允许删除记录
                         where: {
                             id: item.id,
-                            userId: userId
+                            userId: userId,
                         },
                         transaction: t
                     },

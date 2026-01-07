@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
                     async isUnique(value) {
                         const user = await User.findOne({where: {email: value}});
                         if (user) {
-                            throw new Conflict("邮箱已存在，请直接登录");
+                            throw new Conflict("邮箱已存在");
                         }
                     },
                 },

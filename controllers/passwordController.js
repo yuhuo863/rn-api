@@ -1,4 +1,4 @@
-const {Password, Category, sequelize} = require("../models");
+const {Password, Category} = require("../models");
 const {NotFound} = require("http-errors");
 const {Op} = require("sequelize");
 const {success, failure} = require("../utils/responses");
@@ -154,7 +154,6 @@ const passwordController = {
                         attributes: ['name', 'icon', 'color'],
                     }
                 ],
-                attributes: ['id', 'title', 'deletedAt', 'updatedAt'],
                 order: [['updatedAt', 'DESC']],
                 paranoid: false
             })

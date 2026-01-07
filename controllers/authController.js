@@ -42,6 +42,8 @@ const authController = {
 
             success(res, "用户注册成功", {
                 token,
+                user,
+                system_pepper: process.env.SYSTEM_PEPPER,
             }, 201);
         } catch (error) {
             failure(res, error);
