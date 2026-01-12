@@ -58,8 +58,7 @@ const userController = {
         //  再开启事务
         const t = await sequelize.transaction();
         try {
-            const userId = req.user.id;
-            const user = await User.findByPk(userId);
+            const user = req.user;
             const {currentPassword, newPassword, items} = req.body;
             const isPasswordValid = bcrypt.compareSync(currentPassword, user.password);
             if (!isPasswordValid) {
@@ -71,31 +70,28 @@ const userController = {
             // 更新用户密码
             await user.update({password: newPassword}, {transaction: t});
 
-            // 构造批量更新的 Promise 数组
-            const updatePromises = items.map((item) => {
-                // 安全校验：只更新属于当前用户的记录
-                return Password.update(
-                    {
-                        title: item.title,
-                        username: item.username,
-                        password: item.password,
-                        notes: item.notes,
-                        site_url: item.site_url,
-                        // 其他加密字段...
-                    },
-                    {
-                        paranoid: false, // 允许删除记录
-                        where: {
-                            id: item.id,
-                            userId: userId,
+            if (items && items.length > 0) {
+                const updatePromises = items.map((item) => {
+                    return Password.update(
+                        {
+                            title: item.title,
+                            username: item.username,
+                            password: item.password,
+                            notes: item.notes,
+                            site_url: item.site_url,
                         },
-                        transaction: t
-                    },
-                );
-            });
-            // 等待所有更新操作完成
-            await Promise.all(updatePromises);
-            // 提交事务
+                        {
+                            paranoid: false,
+                            where: {
+                                id: item.id,
+                                userId: req.user.id,
+                            },
+                            transaction: t
+                        },
+                    );
+                });
+                await Promise.all(updatePromises);
+            }
             await t.commit();
             success(res, "密码重置成功");
         } catch (error) {
@@ -107,11 +103,8 @@ const userController = {
         try {
             validateParams(req)
 
-            const userId = req.user.id;
-            const user = await User.findByPk(userId);
-            if (!user) {
-                throw new NotFound("用户不存在");
-            }
+            const user = req.user;
+
             const {contact, content, feedbackType, deviceInfo} = req.body;
 
             const userContact = contact || user.email;
@@ -131,12 +124,7 @@ const userController = {
     },
     async cancelAccount(req, res) {
         try {
-            const userId = req.user.id;
-            const user = await User.findByPk(userId);
-            if (!user) {
-                throw new NotFound("用户不存在");
-            }
-
+            const user = req.user
             await user.update({deleted: true});
             success(res, "用户已注销");
         } catch (error) {

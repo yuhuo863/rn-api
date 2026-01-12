@@ -10,7 +10,6 @@ const errorHandler = require("./middlewares/error-handler");
 
 const app = express();
 
-// 启动邮件消费者
 const {mailConsumer} = require("./utils/rabbitMQ");
 (async () => {
     await mailConsumer();

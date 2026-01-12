@@ -7,19 +7,29 @@ const {validateParams} = require("../utils/validations");
 const noticeController = {
     async getNotices(req, res) {
         try {
-            const userId = req.user.id;
-            const user = await User.findByPk(userId);
+            const pageSize = req.query.pageSize || 10;
+            const page = req.query.page || 1;
+            const offset = (page - 1) * pageSize;
+
+            const user = req.user
             // 如果有未读通知，则更新为当前时间 (登录后且有未读通知时)
             if (user && user.lastReadNoticeAt === null) {
                 await user.update({
                     lastReadNoticeAt: new Date(),
                 });
             }
-            const notices = await Notice.findAll({
+            const {rows, count} = await Notice.findAndCountAll({
                 order: [['createdAt', 'DESC']],
+                limit: pageSize,
+                offset: offset,
             })
             success(res, "成功获取通知列表", {
-                notices,
+                notices: rows,
+                pagination: {
+                    total: count,
+                    pageSize,
+                    page,
+                },
             });
         } catch (error) {
             failure(res, error);

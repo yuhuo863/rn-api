@@ -1,6 +1,5 @@
 const {User, Category} = require("../models");
 const {success, failure} = require("../utils/responses");
-const {validationResult} = require("express-validator");
 const {BadRequest, NotFound} = require("http-errors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -8,7 +7,6 @@ const {Op} = require("sequelize");
 const {validateParams} = require("../utils/validations");
 
 const authController = {
-    // 用户注册
     async register(req, res) {
         try {
             validateParams(req)
@@ -49,13 +47,9 @@ const authController = {
             failure(res, error);
         }
     },
-    // 用户登录
     async login(req, res) {
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                throw new BadRequest("请求参数错误", errors.array());
-            }
+            validateParams(req)
 
             const {login, password} = req.body;
 

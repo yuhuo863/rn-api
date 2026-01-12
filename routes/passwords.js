@@ -10,6 +10,8 @@ router.get('/', passwordController.getUserPasswords);
 
 router.get('/trash', passwordController.getTrashPasswords);
 
+router.get('/list-all', passwordController.getAllPasswords);
+
 router.get('/:id', passwordController.getPasswordDetail);
 
 router.post("/", [
@@ -96,5 +98,4 @@ router.post('/force', [
             .withMessage("密码ID格式不正确")
     ], passwordController.thoroughDelPassword
 );
-
 module.exports = router;

@@ -72,25 +72,10 @@ const passwordController = {
     },
     async getUserPasswords(req, res) {
         try {
-            const {
-                categoryId,
-                keyword,
-                sortBy = "createdAt",
-                sortOrder = "DESC"
-            } = req.query;
-
             const userId = req.user.id;
-            const whereClause = {
-                userId
-            };
-            if (categoryId) {
-                whereClause.categoryId = categoryId;
-            }
-            if (keyword) {
-                whereClause.title = {[Op.like]: `%${keyword}%`}
-            }
+
             const {count, rows} = await Password.findAndCountAll({
-                where: whereClause,
+                where: {userId},
                 include: [
                     {
                         model: Category,
@@ -99,7 +84,7 @@ const passwordController = {
                     }
                 ],
                 attributes: {exclude: ['UserId', 'CategoryId']},
-                order: [[sortBy, sortOrder]],
+                order: [['createdAt', 'DESC']],
             });
 
             success(res, "成功获取用户密码列表", {
@@ -195,7 +180,35 @@ const passwordController = {
         } catch (error) {
             failure(res, error);
         }
-    }
+    },
+    async getAllPasswords(req, res) {
+        try {
+            const userId = req.user.id;
+
+            const {count, rows} = await Password.findAndCountAll({
+                where: {userId},
+                include: [
+                    {
+                        model: Category,
+                        as: "category",
+                        attributes: ['name', 'icon', 'color'],
+                    }
+                ],
+                attributes: {
+                    exclude: ['UserId', 'CategoryId'],
+                },
+                order: [['createdAt', 'DESC']],
+                paranoid: false
+            });
+
+            success(res, "成功获取所有密码数据", {
+                passwords: rows,
+                total: count,
+            });
+        } catch (error) {
+            failure(res, error);
+        }
+    },
 };
 
 module.exports = passwordController;
