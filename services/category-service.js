@@ -3,7 +3,7 @@ const {failure, success} = require("../utils/responses");
 const {validateParams} = require('../utils/validations');
 const {BadRequest, NotFound, Conflict} = require("http-errors");
 
-const categoryController = {
+const categoryService = {
     async getAllCategories(req, res) {
         try {
             const userId = req.user.id;
@@ -125,4 +125,4 @@ const categoryController = {
     }
 }
 
-module.exports = categoryController;
+module.exports = categoryService;

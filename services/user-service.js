@@ -7,7 +7,7 @@ const feedbackEmailTemplate = require("../templates/feedback");
 const {singleFileUpload} = require("../utils/aliyun");
 const bcrypt = require("bcrypt");
 
-const userController = {
+const userService = {
     async getCurrentUser(req, res) {
         try {
             const {id} = req.user;
@@ -133,4 +133,4 @@ const userController = {
     },
 };
 
-module.exports = userController;
+module.exports = userService;

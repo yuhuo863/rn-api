@@ -4,7 +4,7 @@ const {Op} = require("sequelize");
 const {success, failure} = require("../utils/responses");
 const {validateParams} = require('../utils/validations');
 
-const passwordController = {
+const passwordService = {
     async createPassword(req, res) {
         try {
             validateParams(req)
@@ -211,4 +211,4 @@ const passwordController = {
     },
 };
 
-module.exports = passwordController;
+module.exports = passwordService;

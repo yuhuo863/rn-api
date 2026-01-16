@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const {Op} = require("sequelize");
 const {validateParams} = require("../utils/validations");
 
-const authController = {
+const authService = {
     async register(req, res) {
         try {
             validateParams(req)
@@ -81,4 +81,4 @@ const authController = {
     },
 };
 
-module.exports = authController;
+module.exports = authService;

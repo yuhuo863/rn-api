@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const {body} = require("express-validator");
 
-const userController = require("../controllers/userController");
+const userService = require("../services/user-service");
 const authenticate = require("../middlewares/auth-user");
 router.use(authenticate);
 
-router.get("/me", userController.getCurrentUser);
+router.get("/me", userService.getCurrentUser);
 router.put("/me", [
     body("username")
         .optional()
@@ -22,7 +22,7 @@ router.put("/me", [
         .isLength({max: 255})
         .withMessage("头像链接不能超过255个字符"),
     body("sex").optional().isIn([0, 1, 2]).withMessage("性别必须是 0（女）、1（男）或 2（未选择）"),
-], userController.updateUser);
+], userService.updateUser);
 router.post('/reset-master-password', [
     body('currentPassword')
         .notEmpty()
@@ -37,8 +37,8 @@ router.post('/reset-master-password', [
     body('items')
         .isArray()
         .withMessage('加密数据项必须是数组')
-], userController.resetMasterPasswordAndReEncrypt);
-router.post("/upload", userController.uploadAvatar);
+], userService.resetMasterPasswordAndReEncrypt);
+router.post("/upload", userService.uploadAvatar);
 router.post("/feedback", [
     body("feedbackType")
         .notEmpty()
@@ -60,7 +60,7 @@ router.post("/feedback", [
         .optional()
         .isObject()
         .withMessage("设备信息必须是一个对象"),
-], userController.sendFeedbackEmail);
-router.delete("/me", userController.cancelAccount);
+], userService.sendFeedbackEmail);
+router.delete("/me", userService.cancelAccount);
 
 module.exports = router;

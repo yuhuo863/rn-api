@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const {body, param} = require("express-validator");
 
-const categoryController = require("../controllers/categoryController");
+const categoryService = require("../services/category-service");
 const authenticate = require("../middlewares/auth-user");
 router.use(authenticate);
 
-router.get("/", categoryController.getAllCategories);
+router.get("/", categoryService.getAllCategories);
 
 router.post('/', [
     body("name")
@@ -22,7 +22,7 @@ router.post('/', [
         .optional()
         .isHexColor()
         .withMessage("颜色必须是有效的十六进制颜色值"),
-], categoryController.createCategory);
+], categoryService.createCategory);
 
 router.put('/:id', [
     param("id")
@@ -38,7 +38,7 @@ router.put('/:id', [
         .optional()
         .isString()
         .withMessage("图标必须是字符串"),
-], categoryController.updateCategory);
+], categoryService.updateCategory);
 
 router.delete('/:id', [
     param("id")
@@ -46,6 +46,6 @@ router.delete('/:id', [
         .withMessage('分类ID不能为空')
         .isUUID('4')
         .withMessage("无效的分类ID"),
-], categoryController.deleteCategory);
+], categoryService.deleteCategory);
 
 module.exports = router;

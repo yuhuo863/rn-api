@@ -4,7 +4,7 @@ const {validationResult} = require("express-validator");
 const {BadRequest} = require("http-errors");
 const {validateParams} = require("../utils/validations");
 
-const noticeController = {
+const noticeService = {
     async getNotices(req, res) {
         try {
             const pageSize = req.query.pageSize || 10;
@@ -91,4 +91,4 @@ const noticeController = {
     },
 }
 
-module.exports = noticeController;
+module.exports = noticeService;
