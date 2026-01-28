@@ -4,9 +4,8 @@ const {body} = require("express-validator");
 
 const userService = require("../services/user-service");
 const authenticate = require("../middlewares/auth-user");
-router.use(authenticate);
 
-router.get("/me", userService.getCurrentUser);
+router.get("/me", authenticate, userService.getCurrentUser);
 router.put("/me", [
     body("username")
         .optional()
@@ -22,7 +21,7 @@ router.put("/me", [
         .isLength({max: 255})
         .withMessage("头像链接不能超过255个字符"),
     body("sex").optional().isIn([0, 1, 2]).withMessage("性别必须是 0（女）、1（男）或 2（未选择）"),
-], userService.updateUser);
+], authenticate, userService.updateUser);
 router.post('/reset-master-password', [
     body('currentPassword')
         .notEmpty()
@@ -37,8 +36,8 @@ router.post('/reset-master-password', [
     body('items')
         .isArray()
         .withMessage('加密数据项必须是数组')
-], userService.resetMasterPasswordAndReEncrypt);
-router.post("/upload", userService.uploadAvatar);
+], authenticate, userService.resetMasterPasswordAndReEncrypt);
+router.post("/upload", authenticate, userService.uploadAvatar);
 router.post("/feedback", [
     body("feedbackType")
         .notEmpty()
@@ -60,7 +59,36 @@ router.post("/feedback", [
         .optional()
         .isObject()
         .withMessage("设备信息必须是一个对象"),
-], userService.sendFeedbackEmail);
-router.delete("/me", userService.cancelAccount);
+], authenticate, userService.sendFeedbackEmail);
+router.delete("/me", authenticate, userService.cancelAccount);
+// 发送邮箱验证码
+router.post("/send-captcha", [
+    body("email")
+        .notEmpty()
+        .withMessage("请提供邮箱地址")
+        .isEmail()
+        .withMessage("请提供有效的邮箱地址"),
+], userService.sendEmailCode);
+// 校验邮箱验证码
+router.post("/verify-captcha", [
+    body("email")
+        .notEmpty()
+        .withMessage("请提供邮箱地址")
+        .isEmail()
+        .withMessage("请提供有效的邮箱地址"),
+    body("code")
+        .notEmpty()
+        .withMessage("请提供验证码")
+        .isLength({min: 6, max: 6})
+        .withMessage("请提供6位验证码"),
+], userService.verifyEmailCode)
+// 销毁账号
+router.post("/wipe-account", [
+    body("email")
+        .notEmpty()
+        .withMessage("请提供邮箱地址")
+        .isEmail()
+        .withMessage("请提供有效的邮箱地址"),
+], userService.wipeAccount);
 
 module.exports = router;

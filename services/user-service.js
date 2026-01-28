@@ -1,11 +1,14 @@
-const {User, Password, sequelize} = require("../models");
+const {User, Category, Password, sequelize} = require("../models");
 const {NotFound, BadRequest} = require("http-errors");
 const {failure, success} = require("../utils/responses");
 const {mailProducer} = require("../utils/rabbitMQ");
 const {validateParams} = require("../utils/validations");
 const feedbackEmailTemplate = require("../templates/feedback");
 const {singleFileUpload} = require("../utils/aliyun");
+const {redis} = require("../utils/redis");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const emailVerificationTemplate = require('../templates/captcha');
 
 const userService = {
     async getCurrentUser(req, res) {
@@ -67,7 +70,7 @@ const userService = {
             if (currentPassword === newPassword) {
                 throw new BadRequest("新密码不能与当前密码相同");
             }
-            // 更新用户密码
+            // 更新用户所有密码
             await user.update({password: newPassword}, {transaction: t});
 
             if (items && items.length > 0) {
@@ -131,6 +134,58 @@ const userService = {
             failure(res, error);
         }
     },
+    async sendEmailCode(req, res) {
+        try {
+            validateParams(req)
+            const {email} = req.body;
+            const user = await User.findOne({where: {email}});
+            if (!user) {
+                throw new NotFound("邮箱错误或未注册");
+            }
+
+            const code = crypto.randomInt(100000, 1000000).toString();
+            await redis.set(`email_verification:${user.id}`, code, 60 * 5);
+            const html = emailVerificationTemplate(code)
+            const msg = {
+                to: email,
+                subject: "「重置密码」验证码",
+                html,
+            }
+            await mailProducer(msg)
+
+            success(res, "验证码已发送至您的邮箱");
+        } catch (error) {
+            failure(res, error);
+        }
+    },
+    async verifyEmailCode(req, res) {
+        try {
+            validateParams(req)
+            const {email, code} = req.body;
+            const user = await User.findOne({where: {email}});
+            if (!user) {
+                throw new NotFound("邮箱错误或未注册");
+            }
+            const storedCode = await redis.get(`email_verification:${user.id}`);
+            if (!storedCode || storedCode !== +code) {
+                throw new BadRequest("验证码无效或已过期");
+            }
+            await redis.del(`email_verification:${user.id}`);
+            success(res, "验证通过");
+        } catch (error) {
+            failure(res, error);
+        }
+    },
+    async wipeAccount(req, res) {
+        try {
+            validateParams(req)
+            const {email} = req.body;
+            await User.destroy({where: {email}});
+            success(res, "数据已清除");
+        } catch (error) {
+            failure(res, error);
+        }
+    }
 };
 
 module.exports = userService;
